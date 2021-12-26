@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Home</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/static/css/index.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.24.0/axios.min.js" defer></script>
+</head>
+<body>
+    <div class="container p-6 mx-auto min-h-screen h-full">
+        <div class="flex flex-1 flex-row justify-betweeen">
+            <div class="bg-gray-100 card-wrapper rounded-md basis-1/4 mr-2 relative" ondrop="drop(event, 'Todo')" ondragover="allowDrop(event)" id="todo-wrapper">
+                <div class="bg-slate-600 h-2 rounded-md basis-1/4"></div>
+                {% for todo in todos: %}
+                    {% if todo.status == "Todo" %}
+                        <div class="bg-white rounded-md p-5 m-3 mb-5 cursor-pointer" id="draggable-{{todo.id}}" draggable="true" ondragstart="drag(event, {{ todo }})">
+                            <p class="mb-3">{{ todo.task }}</p>
+                            <span class="bg-slate-600 rounded-md px-3 py-1 text-xs text-white" id="todo-status">
+                                {{ todo.status }}
+                            </span>
+                        </div>
+                    {% endif %}
+                {% endfor %}
+
+                <div class="bg-slate-200 h-auto basis-1/4 cursor-pointer absolute bottom-1 w-full text-center py-2">
+                    <span class="text-sm" id="add-task-todo">+ Click to add task</span>
+                    <textarea name="todo-task" id="todo-task" cols="10" rows="5" class="w-full px-3 py-2 hidden"></textarea>
+                </div>
+            </div>
+            <div class="bg-gray-100 card-wrapper rounded-md basis-1/4 mr-2 relative" ondrop="drop(event, 'In Progress')" ondragover="allowDrop(event)">
+                <div class="bg-sky-500 h-2 rounded-md basis-1/4"></div>
+                {% for todo in todos: %}
+                    {% if todo.status == "In Progress" %}
+                        <div class="bg-white rounded-md p-5 m-3 mb-5 cursor-pointer" id="draggable" draggable="true" ondragstart="drag(event, {{ todo }})">
+                            <p class="mb-3">{{ todo.task }}</p>
+                            <span class="bg-sky-600 rounded-md px-3 py-1 text-xs text-white" id="todo-status">
+                                {{ todo.status }}
+                            </span>
+                        </div>
+                    {% endif %}
+                {% endfor %}
+            </div>
+            <div class="bg-gray-100 card-wrapper rounded-md basis-1/4 mr-2 relative" ondrop="drop(event, 'Done')" ondragover="allowDrop(event)">
+                <div class="bg-emerald-500 h-2 rounded-md basis-1/4"></div>
+                {% for todo in todos: %}
+                    {% if todo.status == "Done" %}
+                        <div class="bg-white rounded-md p-5 m-3 mb-5 cursor-pointer" id="draggable" draggable="true" ondragstart="drag(event, {{ todo }})">
+                            <p class="mb-3">{{ todo.task }}</p>
+                            <span class="bg-emerald-600 rounded-md px-3 py-1 text-xs text-white" id="todo-status">
+                                {{ todo.status }}
+                            </span>
+                        </div>
+                    {% endif %}
+                {% endfor %}
+            </div>
+            <div class="bg-gray-100 card-wrapper rounded-md basis-1/4 mr-2 relative" ondrop="drop(event, 'Expired')" ondragover="allowDrop(event)">
+                <div class="bg-rose-500 h-2 rounded-md basis-1/4"></div>
+                {% for todo in todos: %}
+                    {% if todo.status == "Expired" %}
+                        <div class="bg-white rounded-md p-5 m-3 mb-5 cursor-pointer" id="draggable" draggable="true" ondragstart="drag(event, {{ todo }})">
+                            <p class="mb-3">{{ todo.task }}</p>
+                            <span class="bg-rose-600 rounded-md px-3 py-1 text-xs text-white" id="todo-status">
+                                {{ todo.status }}
+                            </span>
+                        </div>
+                    {% endif %}
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+
+    <script src="/static/js/global.js"></script>
+</body>
+</html>
